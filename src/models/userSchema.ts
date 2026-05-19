@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+import { Schema } from "mongoose";
 import validator from "validator";
 
-interface IUser extends Document {
+export interface IUser {
   _id: string;
   name: string;
   email: string;
@@ -11,11 +11,10 @@ interface IUser extends Document {
   dob: Date;
   createdAt: Date;
   updatedAt: Date;
-  //   Virtual Attribute
   age: number;
 }
 
-const schema = new mongoose.Schema(
+export const userSchema = new Schema<IUser>(
   {
     _id: {
       type: String,
@@ -28,8 +27,8 @@ const schema = new mongoose.Schema(
     email: {
       type: String,
       unique: [true, "Email already Exist"],
-      required: [true, "Please enter Name"],
-      validate: validator.default.isEmail,
+      required: [true, "Please enter Email"],
+      validate: validator.isEmail,
     },
     photo: {
       type: String,
@@ -55,7 +54,7 @@ const schema = new mongoose.Schema(
   }
 );
 
-schema.virtual("age").get(function () {
+userSchema.virtual("age").get(function () {
   const today = new Date();
   const dob = this.dob;
   let age = today.getFullYear() - dob.getFullYear();
@@ -69,5 +68,3 @@ schema.virtual("age").get(function () {
 
   return age;
 });
-
-export const User = mongoose.model<IUser>("User", schema);

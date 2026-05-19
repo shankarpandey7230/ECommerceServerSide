@@ -4,7 +4,8 @@
     "module": "NodeNext",
     "rootDir": "src",
     "moduleResolution": "NodeNext",
-    "outDir": "/dist",
+    "outDir": "./dist",
+    "jsx": "react-jsx",
     "strict": true
   }
 }
